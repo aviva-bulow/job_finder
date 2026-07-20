@@ -1,6 +1,7 @@
 import re
 
-CONTACT_RE = re.compile(r"\\contact\{[^}]*\}\{[^}]*\}\{[^}]*\}\{[^}]*\}")
+_ARG = r"\{(?:[^{}]|\{[^{}]*\})*\}"
+CONTACT_RE = re.compile(r"\\contact" + _ARG * 4)
 EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
 GITHUB_RE = re.compile(r"github\.com/\S+")
 LINKEDIN_RE = re.compile(r"linkedin\.com/in/\S+")
