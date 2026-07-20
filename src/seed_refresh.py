@@ -66,3 +66,14 @@ def refresh_seed(seed_path: str) -> list[str]:
             yaml.safe_dump({"companies": existing}, f, sort_keys=False)
 
     return added
+
+
+def main():
+    added = refresh_seed("config/companies_seed.yaml")
+    print(f"Added {len(added)} new seed companies")
+    for name in added:
+        print(f"  {name}")
+
+
+if __name__ == "__main__":
+    main()
