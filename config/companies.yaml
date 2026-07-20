@@ -1,3 +1,97 @@
-# Populated automatically by src/discovery.py.
-# Each entry: {name: str, ats_type: greenhouse|lever|ashby, token: str}
-companies: []
+companies:
+- name: Watershed
+  ats_type: ashby
+  token: watershed
+- name: Redwood Materials
+  ats_type: greenhouse
+  token: redwoodmaterials
+- name: Form Energy
+  ats_type: lever
+  token: form
+- name: Antora Energy
+  ats_type: greenhouse
+  token: antora
+- name: Base Power Company
+  ats_type: ashby
+  token: base-power
+- name: Camus Energy
+  ats_type: greenhouse
+  token: camusenergy
+- name: Overstory
+  ats_type: greenhouse
+  token: overstory
+- name: Mill Industries
+  ats_type: greenhouse
+  token: mill
+- name: Aurora Solar
+  ats_type: ashby
+  token: aurorasolar
+- name: Arcadia
+  ats_type: lever
+  token: arcadia
+- name: ChargePoint
+  ats_type: greenhouse
+  token: chargepoint
+- name: Span
+  ats_type: ashby
+  token: span
+- name: Chestnut Carbon
+  ats_type: lever
+  token: chestnutcarbon
+- name: Charm Industrial
+  ats_type: lever
+  token: charmindustrial
+- name: Rondo Energy
+  ats_type: greenhouse
+  token: rondoenergy
+- name: Amperon
+  ats_type: greenhouse
+  token: amperon
+- name: AMP Robotics
+  ats_type: ashby
+  token: amprobotics
+- name: Aquabyte
+  ats_type: lever
+  token: aquabyte
+- name: Arbor Energy
+  ats_type: greenhouse
+  token: arborenergy
+- name: Banyan Infrastructure
+  ats_type: greenhouse
+  token: banyaninfrastructure
+- name: CarbonChain
+  ats_type: greenhouse
+  token: carbonchain
+- name: CATALOG
+  ats_type: ashby
+  token: catalog
+- name: Arable
+  ats_type: lever
+  token: arable
+- name: Arca
+  ats_type: ashby
+  token: arca
+- name: Plume
+  ats_type: greenhouse
+  token: plume
+- name: Sorcerer
+  ats_type: ashby
+  token: sorcerer
+- name: Nira Energy
+  ats_type: greenhouse
+  token: niraenergy
+- name: Posh
+  ats_type: ashby
+  token: posh
+- name: Phase Biolabs
+  ats_type: ashby
+  token: phasebiolabs
+- name: Living Carbon
+  ats_type: lever
+  token: livingcarbon
+- name: PowerX
+  ats_type: greenhouse
+  token: powerx
+- name: Glow Energy
+  ats_type: ashby
+  token: glow
