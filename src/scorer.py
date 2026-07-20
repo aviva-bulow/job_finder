@@ -7,7 +7,10 @@ from .fetchers.base import Job
 SCORE_SCHEMA = {
     "type": "object",
     "properties": {
-        "score": {"type": "integer", "description": "Fit score from 1 (poor fit) to 10 (excellent fit)"},
+        "score": {
+            "type": "integer",
+            "description": "Fit score from 1 (poor fit) to 10 (excellent fit)",
+        },
         "reasoning": {"type": "string", "description": "1-3 sentence explanation of the score"},
     },
     "required": ["score", "reasoning"],

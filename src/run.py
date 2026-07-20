@@ -69,9 +69,13 @@ def main():
                 print(f"  scoring failed for {job.title} @ {job.company}: {exc}")
                 continue
 
-            db.record(conn, job, today, score=result["score"], reasoning=result["reasoning"])
+            db.record(
+                conn, job, today, score=result["score"], reasoning=result["reasoning"]
+            )
             if result["score"] >= settings["score_threshold"]:
-                matches.append({"job": job, "score": result["score"], "reasoning": result["reasoning"]})
+                matches.append(
+                    {"job": job, "score": result["score"], "reasoning": result["reasoning"]}
+                )
 
     matches.sort(key=lambda m: m["score"], reverse=True)
     print(f"{len(matches)} matches at/above threshold {settings['score_threshold']}")
