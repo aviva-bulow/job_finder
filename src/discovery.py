@@ -83,3 +83,17 @@ def run_discovery(seed_path: str, companies_path: str) -> list[dict]:
             yaml.safe_dump({"companies": existing}, f, sort_keys=False)
 
     return newly_discovered
+
+
+def main():
+    discovered = run_discovery("config/companies_seed.yaml", "config/companies.yaml")
+    print(f"Discovered {len(discovered)} new company boards")
+    for company in discovered:
+        print(
+            f"  {company['name']}: "
+            f"{company['ats_type']}/{company['token']}"
+        )
+
+
+if __name__ == "__main__":
+    main()
