@@ -46,7 +46,9 @@ def _from_atom_entry(company: str, entry) -> Job:
         title=_text(entry, f"{ATOM_NS}title"),
         company=company,
         location="",
-        description=strip_html(_text(entry, f"{ATOM_NS}summary") or _text(entry, f"{ATOM_NS}content")),
+        description=strip_html(
+            _text(entry, f"{ATOM_NS}summary") or _text(entry, f"{ATOM_NS}content")
+        ),
         url=url,
         date_posted=_text(entry, f"{ATOM_NS}updated"),
         source="rss",

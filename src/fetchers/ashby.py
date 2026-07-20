@@ -12,7 +12,9 @@ def fetch(company: str, token: str, timeout: int = 15) -> list[Job]:
 
     jobs = []
     for posting in data.get("jobs", []):
-        description = posting.get("descriptionPlain") or strip_html(posting.get("descriptionHtml", ""))
+        description = posting.get("descriptionPlain") or strip_html(
+            posting.get("descriptionHtml", "")
+        )
         jobs.append(
             Job(
                 id="",

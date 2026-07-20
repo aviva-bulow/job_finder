@@ -9,7 +9,17 @@ DIRECTORY_URLS = [
 ]
 
 NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9&.,'!\- ]{1,40}$")
-SKIP_WORDS = {"home", "jobs", "about", "companies", "contact", "login", "sign up", "sign in", "post a job"}
+SKIP_WORDS = {
+    "home",
+    "jobs",
+    "about",
+    "companies",
+    "contact",
+    "login",
+    "sign up",
+    "sign in",
+    "post a job",
+}
 
 
 def _extract_names(html: str) -> list[str]:
