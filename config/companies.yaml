@@ -1,0 +1,3 @@
+# Populated automatically by src/discovery.py.
+# Each entry: {name: str, ats_type: greenhouse|lever|ashby, token: str}
+companies: []

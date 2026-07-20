@@ -1,0 +1,150 @@
+# Seed list of climate/renewable company names to probe for public ATS boards.
+# Sourced from public directories (climatejobslist.com/companies, Y Combinator
+# climate industry page, ClimateTechList, CTVC) as a one-time compilation.
+# Grows over time via src/seed_refresh.py — add more names here anytime and
+# re-run discovery to pick up their boards.
+companies:
+  - name: Watershed
+  - name: Redwood Materials
+  - name: QuantumScape
+  - name: Form Energy
+  - name: Fervo Energy
+  - name: Antora Energy
+  - name: Electric Hydrogen
+  - name: Base Power Company
+  - name: Sila Nanotechnologies
+  - name: Natron Energy
+  - name: WeaveGrid
+  - name: Camus Energy
+  - name: Overstory
+  - name: Persefoni
+  - name: Crux Climate
+  - name: Common Energy
+  - name: Terraform Industries
+  - name: Mill Industries
+  - name: Our Next Energy
+  - name: Aurora Solar
+  - name: Arcadia
+  - name: Sunrun
+  - name: ChargePoint
+  - name: Span
+  - name: Heirloom
+  - name: Climeworks
+  - name: Chestnut Carbon
+  - name: Charm Industrial
+  - name: Rondo Energy
+  - name: Lilac Solutions
+  - name: Pachama
+  - name: CarbonCure Technologies
+  - name: Carbon Engineering
+  - name: Carbon Lighthouse
+  - name: Carbon Upcycling Technologies
+  - name: Raptor Maps
+  - name: Terabase Energy
+  - name: Active Surfaces
+  - name: Kitekraft
+  - name: BlocPower
+  - name: Bidgely
+  - name: Amperon
+  - name: AMPLY Power
+  - name: AMP Robotics
+  - name: AmpUp
+  - name: Antora Energy
+  - name: Aquabyte
+  - name: Arbor Energy
+  - name: Arc Boats
+  - name: Arka Energy
+  - name: Ark Biotech
+  - name: Artyc
+  - name: Avalanche Energy
+  - name: Axiom Cloud
+  - name: Azavea
+  - name: Banyan Infrastructure
+  - name: BasiGo
+  - name: Bellwether Coffee
+  - name: Benson Hill
+  - name: BioLite Energy
+  - name: Blue Planet Energy Systems
+  - name: Boston Metal
+  - name: Boundary Layer Technologies
+  - name: Breathe Battery Technologies
+  - name: Cambrian Innovation
+  - name: Carbon America
+  - name: CarbonChain
+  - name: Carbon13
+  - name: Carbonwave
+  - name: CATALOG
+  - name: Ceres Imaging
+  - name: Cervest
+  - name: ChargerHelp!
+  - name: Chargetrip
+  - name: Chooose
+  - name: Citrine Informatics
+  - name: Clairity Technologies
+  - name: CleanFiber
+  - name: Clearflame Engine Technologies
+  - name: ClearTrace
+  - name: ClimateAi
+  - name: Aeroseal
+  - name: Ampaire
+  - name: Alloy Enterprises
+  - name: Allume Energy
+  - name: Altus Thermal
+  - name: Amber Kinetics
+  - name: Ambri
+  - name: Advanced Ionics
+  - name: Aepnus Technology
+  - name: Aquaria
+  - name: Arable
+  - name: Arca
+  - name: ArcTern Ventures
+  - name: Rise Reforming
+  - name: OctaPulse
+  - name: Rimba
+  - name: Plume
+  - name: Silurian
+  - name: NetworkOcean
+  - name: Sorcerer
+  - name: HyLight
+  - name: Nira Energy
+  - name: Voltic
+  - name: ALT TEX
+  - name: Wand Solar
+  - name: BuyPower
+  - name: Birch Biosciences
+  - name: Paces
+  - name: Posh
+  - name: Carbon Crusher
+  - name: AirMyne
+  - name: Alga Biosciences
+  - name: Phase Biolabs
+  - name: Seabound
+  - name: Impossible Metals
+  - name: Phykos
+  - name: Ferveret
+  - name: Living Carbon
+  - name: Enerjazz
+  - name: Carbonfact
+  - name: Abatable
+  - name: Remora
+  - name: Minimum
+  - name: StratumAI
+  - name: EARTH AI
+  - name: Maple Materials
+  - name: Valo
+  - name: Wren
+  - name: Aerones
+  - name: Airthium
+  - name: Advano
+  - name: Releaf Earth
+  - name: SunFarmer
+  - name: GBatteries
+  - name: PowerX
+  - name: Glow Energy
+  - name: Pina Earth
+  - name: Orbillion Bio
+  - name: Valor Water Analytics
+  - name: Helix Carbon
+  - name: Carbion
+  - name: LNK Energies
+  - name: Bright

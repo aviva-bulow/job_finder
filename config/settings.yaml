@@ -1,0 +1,5 @@
+score_threshold: 7
+claude_model: claude-opus-4-8
+resume_url: https://raw.githubusercontent.com/aviva-bulow/resume/main/main.tex
+db_path: data/jobs.sqlite
+google_sheet_name: Job Matches
