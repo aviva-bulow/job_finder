@@ -37,12 +37,27 @@ def is_seen(conn, job: Job) -> bool:
     return cur.fetchone() is not None
 
 
-def record(conn, job: Job, first_seen_date: str, score: int | None = None, reasoning: str | None = None):
+def record(
+    conn,
+    job: Job,
+    first_seen_date: str,
+    score: int | None = None,
+    reasoning: str | None = None,
+):
     conn.execute(
         """
         INSERT OR IGNORE INTO seen_jobs
             (id, description_hash, company, title, url, first_seen_date, score, reasoning)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (job.id, job.description_hash, job.company, job.title, job.url, first_seen_date, score, reasoning),
+        (
+            job.id,
+            job.description_hash,
+            job.company,
+            job.title,
+            job.url,
+            first_seen_date,
+            score,
+            reasoning,
+        ),
     )

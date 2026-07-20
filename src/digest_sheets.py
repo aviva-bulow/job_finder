@@ -19,7 +19,12 @@ def _open_sheet(service_account_json: str, sheet_id: str):
     return sheet
 
 
-def append_matches(service_account_json: str, sheet_id: str, found_date: str, matches: list[dict]):
+def append_matches(
+    service_account_json: str,
+    sheet_id: str,
+    found_date: str,
+    matches: list[dict],
+):
     if not matches:
         return
 
@@ -27,6 +32,16 @@ def append_matches(service_account_json: str, sheet_id: str, found_date: str, ma
     rows = []
     for m in matches:
         job = m["job"]
-        rows.append([found_date, m["score"], job.company, job.title, job.location, m["reasoning"], job.url])
+        rows.append(
+            [
+                found_date,
+                m["score"],
+                job.company,
+                job.title,
+                job.location,
+                m["reasoning"],
+                job.url,
+            ]
+        )
 
     sheet.append_rows(rows)
