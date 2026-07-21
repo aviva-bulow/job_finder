@@ -7,7 +7,7 @@ import yaml
 from . import db, digest_email, digest_sheets, filters, resume
 from .anonymize import anonymize_resume
 from .fetchers import ashby, greenhouse, lever, rss
-from .scorer import score_job
+from .scorer import score_jobs_batch
 
 FETCHERS = {
     "greenhouse": greenhouse.fetch,
@@ -15,6 +15,11 @@ FETCHERS = {
     "ashby": ashby.fetch,
     "rss": rss.fetch,
 }
+
+# Jobs per scoring call. The system prompt + resume are cached across calls
+# within a run (see scorer.py), so batching mainly amortizes the per-request
+# overhead and lets more scoring happen per cache read.
+SCORE_BATCH_SIZE = 10
 
 
 def load_yaml(path: str) -> dict:
@@ -62,20 +67,28 @@ def main():
             if job.id not in candidate_ids:
                 db.record(conn, job, today)
 
-        for job in candidates:
+        for batch_start in range(0, len(candidates), SCORE_BATCH_SIZE):
+            batch = candidates[batch_start:batch_start + SCORE_BATCH_SIZE]
             try:
-                result = score_job(client, settings["claude_model"], resume_text, job)
-            except Exception as exc:  # noqa: BLE001 - don't let one bad score kill the run
-                print(f"  scoring failed for {job.title} @ {job.company}: {exc}")
+                results = score_jobs_batch(client, settings["claude_model"], resume_text, batch)
+            except Exception as exc:  # noqa: BLE001 - don't let one bad batch kill the run
+                print(
+                    f"  scoring failed for batch of {len(batch)} starting at {batch_start}: {exc}"
+                )
                 continue
 
-            db.record(
-                conn, job, today, score=result["score"], reasoning=result["reasoning"]
-            )
-            if result["score"] >= settings["score_threshold"]:
-                matches.append(
-                    {"job": job, "score": result["score"], "reasoning": result["reasoning"]}
+            for i, job in enumerate(batch):
+                result = results.get(i)
+                if result is None:
+                    print(f"  no score returned for {job.title} @ {job.company}")
+                    continue
+                db.record(
+                    conn, job, today, score=result["score"], reasoning=result["reasoning"]
                 )
+                if result["score"] >= settings["score_threshold"]:
+                    matches.append(
+                        {"job": job, "score": result["score"], "reasoning": result["reasoning"]}
+                    )
 
     matches.sort(key=lambda m: m["score"], reverse=True)
     print(f"{len(matches)} matches at/above threshold {settings['score_threshold']}")

@@ -1,4 +1,42 @@
 from src.fetchers import ashby, greenhouse, lever, rss
+from src.fetchers.base import strip_html
+
+
+def test_strip_html_removes_real_tags():
+    assert strip_html("<p>Build <b>climate</b> software.</p>") == "Build climate software."
+
+
+def test_strip_html_unescapes_double_encoded_markup():
+    # Some ATS postings (seen from real Greenhouse content pasted from Word)
+    # store content that's been HTML-escaped twice, e.g. literal
+    # "&lt;p&gt;...&lt;/p&gt;" text instead of real "<p>" tags.
+    raw = "&lt;p&gt;Build &lt;b&gt;climate&lt;/b&gt; software.&lt;/p&gt;"
+    assert strip_html(raw) == "Build climate software."
+
+
+def test_strip_html_decodes_html_entities():
+    assert strip_html("Rondo&amp;nbsp;is hiring &quot;now&quot;") == "Rondo is hiring \"now\""
+
+
+def test_greenhouse_fetch_handles_double_encoded_content(requests_mock):
+    requests_mock.get(
+        "https://boards-api.greenhouse.io/v1/boards/acme/jobs",
+        json={
+            "jobs": [
+                {
+                    "title": "Site Manager",
+                    "location": {"name": "Remote"},
+                    "content": "&lt;p&gt;Build &lt;b&gt;climate&lt;/b&gt; software.&lt;/p&gt;",
+                    "absolute_url": "https://boards.greenhouse.io/acme/jobs/2",
+                    "updated_at": "2026-01-01T00:00:00Z",
+                }
+            ]
+        },
+    )
+
+    jobs = greenhouse.fetch("Acme", "acme")
+
+    assert jobs[0].description == "Build climate software."
 
 
 def test_greenhouse_fetch(requests_mock):
