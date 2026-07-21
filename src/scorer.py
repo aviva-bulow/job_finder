@@ -58,8 +58,31 @@ def _build_batch_message(jobs: list[Job]) -> str:
     return "\n\n---\n\n".join(postings)
 
 
+def _build_system_text(
+    resume_text: str, salary_min: int | None, salary_max: int | None
+) -> str:
+    sections = [SYSTEM_INSTRUCTIONS]
+    if salary_min or salary_max:
+        lo = f"${salary_min:,}" if salary_min else "no stated minimum"
+        hi = f"${salary_max:,}" if salary_max else "no stated maximum"
+        sections.append(
+            f"The candidate's target salary range is {lo} to {hi}. If the posting "
+            "states a salary — in a structured pay range or mentioned in the "
+            "description text — factor how well it aligns with this target into "
+            "your score and note it briefly in your reasoning. If no salary is "
+            "stated anywhere in the posting, do not penalize it for that absence."
+        )
+    sections.append(f"Resume:\n{resume_text}")
+    return "\n\n".join(sections)
+
+
 def score_jobs_batch(
-    client: anthropic.Anthropic, model: str, resume_text: str, jobs: list[Job]
+    client: anthropic.Anthropic,
+    model: str,
+    resume_text: str,
+    jobs: list[Job],
+    salary_min: int | None = None,
+    salary_max: int | None = None,
 ) -> dict[int, dict]:
     # The system prompt + resume are identical across every batch in a run;
     # marking them as an explicit cache breakpoint means only the first
@@ -69,7 +92,7 @@ def score_jobs_batch(
     system: list[TextBlockParam] = [
         {
             "type": "text",
-            "text": f"{SYSTEM_INSTRUCTIONS}\n\nResume:\n{resume_text}",
+            "text": _build_system_text(resume_text, salary_min, salary_max),
             "cache_control": {"type": "ephemeral"},
         }
     ]

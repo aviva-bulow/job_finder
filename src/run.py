@@ -70,7 +70,14 @@ def main():
         for batch_start in range(0, len(candidates), SCORE_BATCH_SIZE):
             batch = candidates[batch_start:batch_start + SCORE_BATCH_SIZE]
             try:
-                results = score_jobs_batch(client, settings["claude_model"], resume_text, batch)
+                results = score_jobs_batch(
+                    client,
+                    settings["claude_model"],
+                    resume_text,
+                    batch,
+                    salary_min=settings.get("salary_min"),
+                    salary_max=settings.get("salary_max"),
+                )
             except Exception as exc:  # noqa: BLE001 - don't let one bad batch kill the run
                 print(
                     f"  scoring failed for batch of {len(batch)} starting at {batch_start}: {exc}"

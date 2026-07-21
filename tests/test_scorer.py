@@ -116,3 +116,25 @@ def test_score_jobs_batch_system_prompt_instructs_gender_neutral_evaluation():
 
     _, kwargs = client.messages.create.call_args
     assert "gender" in kwargs["system"][0]["text"].lower()
+
+
+def test_score_jobs_batch_includes_salary_range_when_provided():
+    client = make_client([{"index": 0, "score": 9, "reasoning": "fit"}])
+
+    score_jobs_batch(
+        client, "claude-opus-4-8", "resume text", [JOB_A], salary_min=175000, salary_max=250000
+    )
+
+    _, kwargs = client.messages.create.call_args
+    system_text = kwargs["system"][0]["text"]
+    assert "$175,000" in system_text
+    assert "$250,000" in system_text
+
+
+def test_score_jobs_batch_omits_salary_section_when_not_configured():
+    client = make_client([{"index": 0, "score": 9, "reasoning": "fit"}])
+
+    score_jobs_batch(client, "claude-opus-4-8", "resume text", [JOB_A])
+
+    _, kwargs = client.messages.create.call_args
+    assert "salary" not in kwargs["system"][0]["text"].lower()
