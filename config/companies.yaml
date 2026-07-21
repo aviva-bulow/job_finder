@@ -98,3 +98,6 @@ companies:
 - name: ClimateAi
   ats_type: greenhouse
   token: climateai
+- name: Boston Materials
+  ats_type: lever
+  token: boston-materials
