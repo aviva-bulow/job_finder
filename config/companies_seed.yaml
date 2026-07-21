@@ -1,149 +1,396 @@
-# Seed list of climate/renewable company names to probe for public ATS boards.
-# Sourced from public directories (climatejobslist.com/companies, Y Combinator
-# climate industry page, ClimateTechList, CTVC) as a one-time compilation.
-# Grows over time via src/seed_refresh.py — add more names here anytime and
-# re-run discovery to pick up their boards.
 companies:
-  - name: Watershed
-  - name: Redwood Materials
-  - name: QuantumScape
-  - name: Form Energy
-  - name: Fervo Energy
-  - name: Antora Energy
-  - name: Electric Hydrogen
-  - name: Base Power Company
-  - name: Sila Nanotechnologies
-  - name: Natron Energy
-  - name: WeaveGrid
-  - name: Camus Energy
-  - name: Overstory
-  - name: Persefoni
-  - name: Crux Climate
-  - name: Common Energy
-  - name: Terraform Industries
-  - name: Mill Industries
-  - name: Our Next Energy
-  - name: Aurora Solar
-  - name: Arcadia
-  - name: Sunrun
-  - name: ChargePoint
-  - name: Span
-  - name: Heirloom
-  - name: Climeworks
-  - name: Chestnut Carbon
-  - name: Charm Industrial
-  - name: Rondo Energy
-  - name: Lilac Solutions
-  - name: Pachama
-  - name: CarbonCure Technologies
-  - name: Carbon Engineering
-  - name: Carbon Lighthouse
-  - name: Carbon Upcycling Technologies
-  - name: Raptor Maps
-  - name: Terabase Energy
-  - name: Active Surfaces
-  - name: Kitekraft
-  - name: BlocPower
-  - name: Bidgely
-  - name: Amperon
-  - name: AMPLY Power
-  - name: AMP Robotics
-  - name: AmpUp
-  - name: Aquabyte
-  - name: Arbor Energy
-  - name: Arc Boats
-  - name: Arka Energy
-  - name: Ark Biotech
-  - name: Artyc
-  - name: Avalanche Energy
-  - name: Axiom Cloud
-  - name: Azavea
-  - name: Banyan Infrastructure
-  - name: BasiGo
-  - name: Bellwether Coffee
-  - name: Benson Hill
-  - name: BioLite Energy
-  - name: Blue Planet Energy Systems
-  - name: Boston Metal
-  - name: Boundary Layer Technologies
-  - name: Breathe Battery Technologies
-  - name: Cambrian Innovation
-  - name: Carbon America
-  - name: CarbonChain
-  - name: Carbon13
-  - name: Carbonwave
-  - name: CATALOG
-  - name: Ceres Imaging
-  - name: Cervest
-  - name: ChargerHelp!
-  - name: Chargetrip
-  - name: Chooose
-  - name: Citrine Informatics
-  - name: Clairity Technologies
-  - name: CleanFiber
-  - name: Clearflame Engine Technologies
-  - name: ClearTrace
-  - name: ClimateAi
-  - name: Aeroseal
-  - name: Ampaire
-  - name: Alloy Enterprises
-  - name: Allume Energy
-  - name: Altus Thermal
-  - name: Amber Kinetics
-  - name: Ambri
-  - name: Advanced Ionics
-  - name: Aepnus Technology
-  - name: Aquaria
-  - name: Arable
-  - name: Arca
-  - name: ArcTern Ventures
-  - name: Rise Reforming
-  - name: OctaPulse
-  - name: Rimba
-  - name: Plume
-  - name: Silurian
-  - name: NetworkOcean
-  - name: Sorcerer
-  - name: HyLight
-  - name: Nira Energy
-  - name: Voltic
-  - name: ALT TEX
-  - name: Wand Solar
-  - name: BuyPower
-  - name: Birch Biosciences
-  - name: Paces
-  - name: Posh
-  - name: Carbon Crusher
-  - name: AirMyne
-  - name: Alga Biosciences
-  - name: Phase Biolabs
-  - name: Seabound
-  - name: Impossible Metals
-  - name: Phykos
-  - name: Ferveret
-  - name: Living Carbon
-  - name: Enerjazz
-  - name: Carbonfact
-  - name: Abatable
-  - name: Remora
-  - name: Minimum
-  - name: StratumAI
-  - name: EARTH AI
-  - name: Maple Materials
-  - name: Valo
-  - name: Wren
-  - name: Aerones
-  - name: Airthium
-  - name: Advano
-  - name: Releaf Earth
-  - name: SunFarmer
-  - name: GBatteries
-  - name: PowerX
-  - name: Glow Energy
-  - name: Pina Earth
-  - name: Orbillion Bio
-  - name: Valor Water Analytics
-  - name: Helix Carbon
-  - name: Carbion
-  - name: LNK Energies
-  - name: Bright
+- name: Watershed
+- name: Redwood Materials
+- name: QuantumScape
+- name: Form Energy
+- name: Fervo Energy
+- name: Antora Energy
+- name: Electric Hydrogen
+- name: Base Power Company
+- name: Sila Nanotechnologies
+- name: Natron Energy
+- name: WeaveGrid
+- name: Camus Energy
+- name: Overstory
+- name: Persefoni
+- name: Crux Climate
+- name: Common Energy
+- name: Terraform Industries
+- name: Mill Industries
+- name: Our Next Energy
+- name: Aurora Solar
+- name: Arcadia
+- name: Sunrun
+- name: ChargePoint
+- name: Span
+- name: Heirloom
+- name: Climeworks
+- name: Chestnut Carbon
+- name: Charm Industrial
+- name: Rondo Energy
+- name: Lilac Solutions
+- name: Pachama
+- name: CarbonCure Technologies
+- name: Carbon Engineering
+- name: Carbon Lighthouse
+- name: Carbon Upcycling Technologies
+- name: Raptor Maps
+- name: Terabase Energy
+- name: Active Surfaces
+- name: Kitekraft
+- name: BlocPower
+- name: Bidgely
+- name: Amperon
+- name: AMPLY Power
+- name: AMP Robotics
+- name: AmpUp
+- name: Aquabyte
+- name: Arbor Energy
+- name: Arc Boats
+- name: Arka Energy
+- name: Ark Biotech
+- name: Artyc
+- name: Avalanche Energy
+- name: Axiom Cloud
+- name: Azavea
+- name: Banyan Infrastructure
+- name: BasiGo
+- name: Bellwether Coffee
+- name: Benson Hill
+- name: BioLite Energy
+- name: Blue Planet Energy Systems
+- name: Boston Metal
+- name: Boundary Layer Technologies
+- name: Breathe Battery Technologies
+- name: Cambrian Innovation
+- name: Carbon America
+- name: CarbonChain
+- name: Carbon13
+- name: Carbonwave
+- name: CATALOG
+- name: Ceres Imaging
+- name: Cervest
+- name: ChargerHelp!
+- name: Chargetrip
+- name: Chooose
+- name: Citrine Informatics
+- name: Clairity Technologies
+- name: CleanFiber
+- name: Clearflame Engine Technologies
+- name: ClearTrace
+- name: ClimateAi
+- name: Aeroseal
+- name: Ampaire
+- name: Alloy Enterprises
+- name: Allume Energy
+- name: Altus Thermal
+- name: Amber Kinetics
+- name: Ambri
+- name: Advanced Ionics
+- name: Aepnus Technology
+- name: Aquaria
+- name: Arable
+- name: Arca
+- name: ArcTern Ventures
+- name: Rise Reforming
+- name: OctaPulse
+- name: Rimba
+- name: Plume
+- name: Silurian
+- name: NetworkOcean
+- name: Sorcerer
+- name: HyLight
+- name: Nira Energy
+- name: Voltic
+- name: ALT TEX
+- name: Wand Solar
+- name: BuyPower
+- name: Birch Biosciences
+- name: Paces
+- name: Posh
+- name: Carbon Crusher
+- name: AirMyne
+- name: Alga Biosciences
+- name: Phase Biolabs
+- name: Seabound
+- name: Impossible Metals
+- name: Phykos
+- name: Ferveret
+- name: Living Carbon
+- name: Enerjazz
+- name: Carbonfact
+- name: Abatable
+- name: Remora
+- name: Minimum
+- name: StratumAI
+- name: EARTH AI
+- name: Maple Materials
+- name: Valo
+- name: Wren
+- name: Aerones
+- name: Airthium
+- name: Advano
+- name: Releaf Earth
+- name: SunFarmer
+- name: GBatteries
+- name: PowerX
+- name: Glow Energy
+- name: Pina Earth
+- name: Orbillion Bio
+- name: Valor Water Analytics
+- name: Helix Carbon
+- name: Carbion
+- name: LNK Energies
+- name: Bright
+- name: Climate Jobs List
+- name: View all jobs
+- name: Create a company profile
+- name: View all companies
+- name: Talent
+- name: Pricing
+- name: Blog
+- name: Updates
+- name: Log in
+- name: Country FilterX
+- name: Clear
+- name: Search
+- name: 120Water0jobs available
+- name: CivicTech
+- name: Software
+- name: Water
+- name: 2X Global0jobs available
+- name: Investing
+- name: Impact Investing
+- name: Social Impact
+- name: Social Entrepreneurship
+- name: Communities
+- name: Activate Global0jobs available
+- name: Product Research
+- name: Additional Ventures0jobs available
+- name: Health Care
+- name: Social Network
+- name: ADL Ventures2jobs available
+- name: Environmental Consulting
+- name: Renewable Energy
+- name: Advanced Ionics0jobs available
+- name: Chemical
+- name: Energy
+- name: Manufacturing
+- name: Aepnus Technology2jobs available
+- name: Chemical Engineering
+- name: Aeroseal1jobs available
+- name: CleanTech
+- name: GreenTech
+- name: Green Building
+- name: Industrial Engineering
+- name: Mechanical Engineering
+- name: Alloy Enterprises0jobs available
+- name: Industrial
+- name: Allume Energy2jobs available
+- name: Clean Energy
+- name: Altus Thermal0jobs available
+- name: Energy Efficiency
+- name: Amber Kinetics1jobs available
+- name: Energy Storage
+- name: Innovation Management
+- name: Ambri1jobs available
+- name: Oil and Gas
+- name: Ampaire0jobs available
+- name: Aerospace
+- name: Air Transportation
+- name: Automotive
+- name: Transportation
+- name: Amperon10jobs available
+- name: Artificial Intelligence
+- name: Test and Measurement
+- name: AMPLY Power0jobs available
+- name: Electric Vehicles
+- name: AMP Robotics2jobs available
+- name: Computer Vision
+- name: Machine Learning
+- name: Recycling
+- name: Robotics
+- name: AmpUp2jobs available
+- name: Electric Vehicle
+- name: Antenna Group0jobs available
+- name: Public Relations
+- name: Unified Communications
+- name: Antora Energy1jobs available
+- name: Aquabyte0jobs available
+- name: Ocean Monitoring
+- name: Aquaria0jobs available
+- name: Water Solutions
+- name: Atmospheric Water Generator
+- name: Water Technologies
+- name: Residential Water
+- name: Arable1jobs available
+- name: Agriculture
+- name: AgTech
+- name: Farming
+- name: Arbor Energy0jobs available
+- name: Hardware
+- name: Power Grid
+- name: Arca1jobs available
+- name: Carbon Removal
+- name: Carbon Removal & Utilization Engineering
+- name: Mining
+- name: Arc Boats1jobs available
+- name: Maritime
+- name: Electric Boats
+- name: ArcTern Ventures0jobs available
+- name: Finance
+- name: Financial Services
+- name: Venture Capital
+- name: Arka Energy0jobs available
+- name: Ark Biotech1jobs available
+- name: Biotechnology
+- name: Food and Beverage
+- name: Smart Buildings
+- name: Commercial Real Estate
+- name: Artyc1jobs available
+- name: Logistics
+- name: Medical
+- name: Sustainability
+- name: Asset Management
+- name: Solar
+- name: Asset Resolution0jobs available
+- name: Analytics
+- name: Big Data
+- name: Predictive Analytics
+- name: Consulting
+- name: Atlantic Council0jobs available
+- name: Information Services
+- name: Audette1jobs available
+- name: B2B
+- name: Energy Management
+- name: SaaS
+- name: Avalanche Energy5jobs available
+- name: Nuclear
+- name: Electrical Distribution
+- name: Axiom Cloud1jobs available
+- name: Azavea0jobs available
+- name: Cloud Computing
+- name: Commercial
+- name: Geospatial
+- name: Mapping Services
+- name: Balance Eco Ltd0jobs available
+- name: Banyan Infrastructure1jobs available
+- name: Compliance
+- name: Infrastructure
+- name: BART0jobs available
+- name: Railroad
+- name: Public Transportation
+- name: BasiGo1jobs available
+- name: battgenie.life0jobs available
+- name: Battery
+- name: Environmental Engineering
+- name: Bellwether Coffee0jobs available
+- name: Coffee
+- name: Information technology
+- name: Benson Hill5jobs available
+- name: Beta Bugs0jobs available
+- name: Genetics
+- name: Bidgely2jobs available
+- name: Consumer Software
+- name: GovTech
+- name: BioLite Energy0jobs available
+- name: Emerging Markets
+- name: Biomimicry 3.81jobs available
+- name: Education
+- name: BlocPower10jobs available
+- name: BlueGreen Alliance3jobs available
+- name: Trade Shows
+- name: Blue Ocean Barns8jobs available
+- name: Food Processing
+- name: Blue Planet Energy Systems0jobs available
+- name: Bodhi0jobs available
+- name: Boston Materials0jobs available
+- name: Advanced Materials
+- name: Boston Metal3jobs available
+- name: Building Material
+- name: Precious Metals
+- name: Marine Transportation
+- name: Bridgemans Services Group0jobs available
+- name: Environmental Services
+- name: Callirius AG0jobs available
+- name: Cambrian Innovation Inc0jobs available
+- name: Camus Energy0jobs available
+- name: Data Integration
+- name: Capex0jobs available
+- name: Carbon130jobs available
+- name: Carbon America1jobs available
+- name: CarbonChain0jobs available
+- name: Supply Chain Management
+- name: Carbon Crusher0jobs available
+- name: Construction
+- name: Circular Economy
+- name: CarbonCure Technologies5jobs available
+- name: Carbon Engineering2jobs available
+- name: Carbon Lighthouse0jobs available
+- name: Hospitality
+- name: CarbonPlan0jobs available
+- name: Carbonwave0jobs available
+- name: Atmosphere
+- name: Climate Risk
+- name: Pollution & Waste Reduction
+- name: Food, Agriculture & Land Use
+- name: Carbyon1jobs available
+- name: Semiconductor
+- name: Renewable Fuels
+- name: CATALOG1jobs available
+- name: Data Storage
+- name: Management Consulting
+- name: Air Quality
+- name: Ceres Imaging0jobs available
+- name: Drones
+- name: Cervest0jobs available
+- name: ChargerHelp!0jobs available
+- name: Chargetrip0jobs available
+- name: Navigation
+- name: Charm Industrial2jobs available
+- name: Chewie Labs0jobs available
+- name: Waste
+- name: Waste Management
+- name: Chooose0jobs available
+- name: Developer APIs
+- name: Enterprise Applications
+- name: Enterprise Software
+- name: cirplus GmbH0jobs available
+- name: marketplace
+- name: Marketing
+- name: Internet
+- name: Citrine Informatics1jobs available
+- name: City of Bainbridge Island1jobs available
+- name: Government
+- name: Climate Adaptation
+- name: Clairity Technologies0jobs available
+- name: Clean Energy Ventures0jobs available
+- name: CleanFiber0jobs available
+- name: Fuel
+- name: Machinery Manufacturing
+- name: ClearPath0jobs available
+- name: ClearTrace0jobs available
+- name: Internet of things
+- name: ClearVUE.Business0jobs available
+- name: ClimaFi0jobs available
+- name: Climate Action Systems0jobs available
+- name: Apps
+- name: Mobile Apps
+- name: Climate Advisers0jobs available
+- name: ClimateAi0jobs available
+- name: Next
+- name: Click to Load More Results
+- name: Sign up for free
+- name: Uncategorised142
+- name: Operations104
+- name: Other Engineering100
+- name: Software Engineering96
+- name: Sales & Business Development96
+- name: Sign up with Google
+- name: Stripe Climate
+- name: Learn more
+- name: Contact us
+- name: privacy policy
+- name: Terms
+- name: Privacy
+- name: Cookies
