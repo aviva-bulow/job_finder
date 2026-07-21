@@ -1,10 +1,14 @@
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 import yaml
+from urllib3.util.retry import Retry
 
 from .fetchers import ashby, greenhouse, lever
 from .fetchers.base import strip_html
+
+DISCOVERY_WORKERS = 16
 
 GENERIC_SUFFIXES = [
     "inc",
@@ -46,10 +50,17 @@ def significant_words(name: str) -> list[str]:
     return words or [w for w in re.split(r"[\s-]+", base) if w]
 
 
-def verify_board(ats_type: str, token: str, name: str, timeout: int = 10) -> bool:
+def verify_board(
+    ats_type: str,
+    token: str,
+    name: str,
+    timeout: int = 10,
+    session: requests.Session | None = None,
+) -> bool:
     url = BOARD_PAGE_URL[ats_type].format(token=token)
+    requester = session or requests
     try:
-        resp = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+        resp = requester.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
     except requests.RequestException:
         return False
     if resp.status_code != 200:
@@ -91,12 +102,38 @@ def slug_candidates(name: str) -> list[str]:
     return candidates
 
 
-def discover_company(name: str) -> dict | None:
+def discover_company(name: str, session: requests.Session | None = None) -> dict | None:
     for slug in slug_candidates(name):
         for ats_type, probe in PROBERS:
-            if probe(slug) and verify_board(ats_type, slug, name):
+            if probe(slug, session=session) and verify_board(
+                ats_type, slug, name, session=session
+            ):
                 return {"name": name, "ats_type": ats_type, "token": slug}
     return None
+
+
+def _make_session() -> requests.Session:
+    session = requests.Session()
+    # Concurrent probing hits the same 3 hosts (Greenhouse/Lever/Ashby) from
+    # every worker at once - transient connection errors, timeouts, and rate
+    # limiting (429/5xx) are expected under that burst load. Without retries
+    # those register as "token not found" and silently drop real companies,
+    # which is exactly the false-negative regression parallelizing this
+    # risked introducing - retry before giving up.
+    retry = Retry(
+        total=3,
+        backoff_factor=0.5,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET"],
+    )
+    adapter = requests.adapters.HTTPAdapter(
+        pool_connections=DISCOVERY_WORKERS,
+        pool_maxsize=DISCOVERY_WORKERS,
+        max_retries=retry,
+    )
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    return session
 
 
 def run_discovery(seed_path: str, companies_path: str) -> list[dict]:
@@ -108,14 +145,17 @@ def run_discovery(seed_path: str, companies_path: str) -> list[dict]:
     existing = existing_data.get("companies") or []
     known_names = {c["name"] for c in existing}
 
-    newly_discovered = []
-    for entry in seed.get("companies", []):
-        name = entry["name"]
-        if name in known_names:
-            continue
-        found = discover_company(name)
-        if found:
-            newly_discovered.append(found)
+    pending_names = [
+        entry["name"] for entry in seed.get("companies", []) if entry["name"] not in known_names
+    ]
+
+    # These are independent, I/O-bound HTTP calls (each company probes up to
+    # a handful of slug candidates across 3 ATS APIs) - running them
+    # concurrently doesn't change which companies get accepted, it just stops
+    # waiting on one company's network round-trips before starting the next.
+    with _make_session() as session, ThreadPoolExecutor(max_workers=DISCOVERY_WORKERS) as pool:
+        results = pool.map(lambda name: discover_company(name, session=session), pending_names)
+        newly_discovered = [found for found in results if found is not None]
 
     if newly_discovered:
         existing.extend(newly_discovered)

@@ -65,6 +65,9 @@ companies:
 - name: CATALOG
   ats_type: ashby
   token: catalog
+- name: ClimateAi
+  ats_type: greenhouse
+  token: climateai
 - name: Arable
   ats_type: lever
   token: arable
@@ -95,9 +98,6 @@ companies:
 - name: Glow Energy
   ats_type: ashby
   token: glow
-- name: ClimateAi
-  ats_type: greenhouse
-  token: climateai
 - name: Boston Materials
   ats_type: lever
   token: boston-materials

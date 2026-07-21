@@ -36,9 +36,10 @@ def fetch(company: str, token: str, timeout: int = 15) -> list[Job]:
     return jobs
 
 
-def probe(token: str, timeout: int = 10) -> bool:
+def probe(token: str, timeout: int = 10, session: requests.Session | None = None) -> bool:
+    requester = session or requests
     try:
-        resp = requests.get(BASE_URL.format(token=token), params={"mode": "json"}, timeout=timeout)
+        resp = requester.get(BASE_URL.format(token=token), params={"mode": "json"}, timeout=timeout)
     except requests.RequestException:
         return False
     if resp.status_code != 200:
