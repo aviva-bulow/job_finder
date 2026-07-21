@@ -1,7 +1,10 @@
-score_threshold: 3
+score_threshold: 5
 claude_model: claude-opus-4-8
 resume_url: https://raw.githubusercontent.com/aviva-bulow/resume/main/main.tex
 db_path: data/jobs.sqlite
 google_sheet_name: Job Matches
 salary_min: 175000
 salary_max: 250000
+home_lat: 42.3932151250748
+home_lon: -85.5014646130142
+max_commute_miles: 50

@@ -4,7 +4,7 @@ import os
 import anthropic
 import yaml
 
-from . import db, digest_email, digest_sheets, filters, resume
+from . import db, digest_email, digest_sheets, filters, location, resume
 from .anonymize import anonymize_resume
 from .fetchers import ashby, greenhouse, lever, rss
 from .scorer import score_jobs_batch
@@ -61,6 +61,20 @@ def main():
 
         candidates = [job for job in new_jobs if filters.matches(job, keywords_config)]
         print(f"{len(candidates)} pass the keyword filter")
+
+        if "home_lat" in settings and "home_lon" in settings:
+            candidates = [
+                job
+                for job in candidates
+                if location.passes_commute_filter(
+                    job,
+                    settings["home_lat"],
+                    settings["home_lon"],
+                    settings["max_commute_miles"],
+                    conn,
+                )
+            ]
+            print(f"{len(candidates)} pass the commute filter")
 
         candidate_ids = {job.id for job in candidates}
         for job in new_jobs:

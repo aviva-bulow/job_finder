@@ -66,3 +66,26 @@ def test_record_is_idempotent(tmp_path):
         count = conn.execute("SELECT COUNT(*) FROM seen_jobs").fetchone()[0]
 
     assert count == 1
+
+
+def test_geocode_cache_round_trip(tmp_path):
+    db_path = str(tmp_path / "jobs.sqlite")
+
+    with db.connect(db_path) as conn:
+        assert db.has_cached_geocode(conn, "Kalamazoo, MI") is False
+        db.cache_geocode(conn, "Kalamazoo, MI", (42.29, -85.58))
+
+    with db.connect(db_path) as conn:
+        assert db.has_cached_geocode(conn, "Kalamazoo, MI") is True
+        assert db.get_cached_geocode(conn, "Kalamazoo, MI") == (42.29, -85.58)
+
+
+def test_geocode_cache_stores_negative_result(tmp_path):
+    db_path = str(tmp_path / "jobs.sqlite")
+
+    with db.connect(db_path) as conn:
+        db.cache_geocode(conn, "Not A Real Place", None)
+
+    with db.connect(db_path) as conn:
+        assert db.has_cached_geocode(conn, "Not A Real Place") is True
+        assert db.get_cached_geocode(conn, "Not A Real Place") is None

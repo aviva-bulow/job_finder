@@ -15,6 +15,12 @@ CREATE TABLE IF NOT EXISTS seen_jobs (
     reasoning TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_seen_jobs_description_hash ON seen_jobs (description_hash);
+
+CREATE TABLE IF NOT EXISTS geocode_cache (
+    place TEXT PRIMARY KEY,
+    lat REAL,
+    lon REAL
+);
 """
 
 
@@ -60,4 +66,27 @@ def record(
             score,
             reasoning,
         ),
+    )
+
+
+def has_cached_geocode(conn, place: str) -> bool:
+    cur = conn.execute("SELECT 1 FROM geocode_cache WHERE place = ?", (place,))
+    return cur.fetchone() is not None
+
+
+def get_cached_geocode(conn, place: str) -> tuple[float, float] | None:
+    # A cached row with NULL lat/lon means a prior lookup failed to resolve
+    # this place - that's cached too, so we don't keep retrying it forever.
+    cur = conn.execute("SELECT lat, lon FROM geocode_cache WHERE place = ?", (place,))
+    row = cur.fetchone()
+    if row is None or row[0] is None:
+        return None
+    return (row[0], row[1])
+
+
+def cache_geocode(conn, place: str, coords: tuple[float, float] | None) -> None:
+    lat, lon = coords if coords else (None, None)
+    conn.execute(
+        "INSERT OR REPLACE INTO geocode_cache (place, lat, lon) VALUES (?, ?, ?)",
+        (place, lat, lon),
     )

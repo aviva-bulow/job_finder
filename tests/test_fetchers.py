@@ -65,6 +65,28 @@ def test_greenhouse_fetch(requests_mock):
     assert "climate" in job.description
     assert "<" not in job.description
     assert job.source == "greenhouse"
+    assert job.workplace_type == "remote"
+
+
+def test_greenhouse_fetch_infers_onsite_when_location_has_no_remote_mention(requests_mock):
+    requests_mock.get(
+        "https://boards-api.greenhouse.io/v1/boards/acme/jobs",
+        json={
+            "jobs": [
+                {
+                    "title": "Site Manager",
+                    "location": {"name": "San Francisco, CA"},
+                    "content": "<p>Manage the site.</p>",
+                    "absolute_url": "https://boards.greenhouse.io/acme/jobs/3",
+                    "updated_at": "2026-01-01T00:00:00Z",
+                }
+            ]
+        },
+    )
+
+    jobs = greenhouse.fetch("Acme", "acme")
+
+    assert jobs[0].workplace_type == ""
 
 
 def test_greenhouse_probe(requests_mock):
@@ -93,6 +115,7 @@ def test_lever_fetch(requests_mock):
                 "descriptionPlain": "Lead our renewable energy modeling team.",
                 "hostedUrl": "https://jobs.lever.co/acme/1",
                 "createdAt": 1735689600000,
+                "workplaceType": "hybrid",
             }
         ],
     )
@@ -103,6 +126,7 @@ def test_lever_fetch(requests_mock):
     assert jobs[0].title == "Director of Climate Science"
     assert jobs[0].location == "New York"
     assert jobs[0].source == "lever"
+    assert jobs[0].workplace_type == "hybrid"
 
 
 def test_lever_probe(requests_mock):
@@ -121,6 +145,7 @@ def test_ashby_fetch(requests_mock):
                     "descriptionPlain": "Work on renewable grid optimization.",
                     "jobUrl": "https://jobs.ashbyhq.com/acme/1",
                     "publishedAt": "2026-01-01T00:00:00Z",
+                    "workplaceType": "Remote",
                 }
             ]
         },
@@ -131,6 +156,9 @@ def test_ashby_fetch(requests_mock):
     assert len(jobs) == 1
     assert jobs[0].title == "Staff Engineer, Grid Software"
     assert jobs[0].source == "ashby"
+    # Ashby's workplaceType values are capitalized ("Remote"/"Hybrid"/
+    # "OnSite") - normalized lowercase to match Lever's convention.
+    assert jobs[0].workplace_type == "remote"
 
 
 def test_rss_fetch_rss_items(requests_mock):

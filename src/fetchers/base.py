@@ -15,6 +15,10 @@ class Job:
     date_posted: str
     source: str
     description_hash: str = ""
+    # Normalized to "remote" / "hybrid" / "onsite" / "" (unknown). Lever and
+    # Ashby expose this directly; Greenhouse doesn't, so it's inferred from
+    # the location text there (see greenhouse.py).
+    workplace_type: str = ""
 
     def __post_init__(self):
         if not self.id:

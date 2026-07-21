@@ -25,6 +25,7 @@ def fetch(company: str, token: str, timeout: int = 15) -> list[Job]:
                 url=posting.get("jobUrl") or posting.get("applyUrl", ""),
                 date_posted=posting.get("publishedAt", ""),
                 source="ashby",
+                workplace_type=(posting.get("workplaceType") or "").lower(),
             )
         )
     return jobs

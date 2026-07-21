@@ -12,16 +12,22 @@ def fetch(company: str, token: str, timeout: int = 15) -> list[Job]:
 
     jobs = []
     for posting in data.get("jobs", []):
+        location = (posting.get("location") or {}).get("name", "")
         jobs.append(
             Job(
                 id="",
                 title=posting.get("title", ""),
                 company=company,
-                location=(posting.get("location") or {}).get("name", ""),
+                location=location,
                 description=strip_html(posting.get("content", "")),
                 url=posting.get("absolute_url", ""),
                 date_posted=posting.get("updated_at", ""),
                 source="greenhouse",
+                # Greenhouse has no structured remote/hybrid/onsite field -
+                # "remote" reliably shows up in the location text when it
+                # applies; anything else is treated as unknown (handled as
+                # onsite by the commute filter).
+                workplace_type="remote" if "remote" in location.lower() else "",
             )
         )
     return jobs
