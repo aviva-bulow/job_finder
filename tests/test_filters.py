@@ -4,6 +4,7 @@ from src.fetchers.base import Job
 KEYWORDS_CONFIG = {
     "climate_keywords": ["climate", "renewable", "solar"],
     "management_titles": ["manager", "director", "head of"],
+    "excluded_functions": ["sales", "marketing", "accounting"],
     "complex_ic_signals": ["staff engineer", "research scientist", "quantitative"],
 }
 
@@ -49,3 +50,22 @@ def test_keyword_match_is_case_insensitive():
 def test_keyword_match_respects_word_boundaries():
     job = make_job("Director", "We help teams acclimate to new tools.")
     assert filters.matches(job, KEYWORDS_CONFIG) is False
+
+
+def test_excluded_function_blocks_management_match():
+    job = make_job("Accounting Manager", "Join our solar team's finance org.")
+    assert filters.matches(job, KEYWORDS_CONFIG) is False
+
+
+def test_excluded_function_does_not_block_complex_ic_match():
+    job = make_job(
+        "Sales Research Scientist", "Quantitative research for our solar sales team."
+    )
+    assert filters.matches(job, KEYWORDS_CONFIG) is True
+
+
+def test_complex_ic_signal_in_description_matches():
+    job = make_job(
+        "Combustion Engineer", "Applies research scientist-level quantitative rigor, solar."
+    )
+    assert filters.matches(job, KEYWORDS_CONFIG) is True

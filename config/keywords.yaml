@@ -17,20 +17,12 @@ climate_keywords:
   - solar
   - wind energy
   - offshore wind
-  - battery storage
-  - energy storage
-  - grid
-  - electrification
-  - ev charging
-  - electric vehicle
-  - heat pump
   - geothermal
   - hydrogen
   - biofuel
   - circular economy
   - esg
   - greenhouse gas
-  - methane
   - carbon capture
   - carbon removal
   - carbon credit
@@ -51,6 +43,35 @@ management_titles:
   - founding engineer
   - engineering manager
 
+# Title words that mean a "management_titles" hit is a non-technical
+# business function, not a fit for Aviva's technical-leadership background.
+# Blocks the management match only - does not affect complex_ic_signals.
+excluded_functions:
+  - sales
+  - account executive
+  - accounting
+  - controller
+  - bookkeeper
+  - marketing
+  - communications
+  - public relations
+  - recruiting
+  - recruiter
+  - talent acquisition
+  - human resources
+  - legal
+  - counsel
+  - events
+  - field service
+  - customer success
+  - customer support
+  - partnerships
+  - business development
+  - global
+  - finance
+  - operations
+  - business
+
 complex_ic_signals:
   - staff engineer
   - principal engineer
@@ -58,12 +79,10 @@ complex_ic_signals:
   - research scientist
   - applied scientist
   - data scientist
-  - quantitative
-  - algorithm
-  - modeling
-  - optimization
-  - phd
-  - ph.d
+  - research engineer
   - machine learning
-  - statistical
-  - simulation
+  - computer vision
+  - deep learning
+  - mlops
+  - perception
+  - senior engineer
