@@ -98,18 +98,3 @@ companies:
 - name: ClimateAi
   ats_type: greenhouse
   token: climateai
-- name: Talent
-  ats_type: greenhouse
-  token: talent
-- name: Clear
-  ats_type: greenhouse
-  token: clear
-- name: Industrial
-  ats_type: greenhouse
-  token: industrial
-- name: Education
-  ats_type: greenhouse
-  token: education
-- name: Privacy
-  ats_type: greenhouse
-  token: privacy

@@ -8,29 +8,34 @@ DIRECTORY_URLS = [
     "https://www.climatejobslist.com/companies",
 ]
 
-NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9&.,'!\- ]{1,40}$")
-SKIP_WORDS = {
-    "home",
-    "jobs",
-    "about",
-    "companies",
-    "contact",
-    "login",
-    "sign up",
-    "sign in",
-    "post a job",
-}
+# Only treat links that point at an actual company profile page as company
+# names. Matching every <a> tag on the page (the original approach) also
+# picked up nav links ("Talent", "Pricing", "Log in"), per-company category
+# tags ("CivicTech", "Water", "Industrial"), and country/industry filters -
+# all styled the same as company links, with no way to tell them apart from
+# link text alone.
+COMPANY_LINK_RE = re.compile(r"^/companies/[a-z0-9-]+$")
+NAME_EL_CLASS_RE = re.compile(r"text-weight-bold")
 
 
 def _extract_names(html: str) -> list[str]:
     soup = BeautifulSoup(html, "html.parser")
+    seen_hrefs = set()
     names = []
-    for link in soup.find_all("a"):
-        text = link.get_text(strip=True)
-        if not text or not NAME_RE.match(text):
+    for link in soup.find_all("a", href=COMPANY_LINK_RE):
+        href = link["href"]
+        if href in seen_hrefs:
             continue
-        if text.lower() in SKIP_WORDS:
+        # The company name sits in its own element inside the link; the link
+        # itself often also wraps a job-count element, so link.get_text()
+        # concatenates both ("120Water" + "0 jobs available").
+        name_el = link.find(class_=NAME_EL_CLASS_RE)
+        if name_el is None:
             continue
+        text = name_el.get_text(strip=True)
+        if not text:
+            continue
+        seen_hrefs.add(href)
         names.append(text)
     return names
 
