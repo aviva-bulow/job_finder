@@ -83,3 +83,61 @@ Both also support manual triggering via `workflow_dispatch` in the Actions tab.
   complex-IC signals used in the pre-filter.
 - `config/companies_seed.yaml` — add company names here anytime; discovery
   picks them up automatically.
+
+## Forking this for your own job search
+
+Everything role-specific lives in a handful of config files — nothing you
+need to change requires touching the Python. If you're also climate-tech
+focused but coming from a different skill set (e.g. not
+engineering/science-management), here's the checklist:
+
+1. **Fork the repo**, then `cp .env.example .env` and fill in your own
+   values (your own Anthropic key, Gmail account, Google Sheet — see
+   [Local secrets](#local-secrets-env) above). Add the same values as repo
+   secrets under your fork's Settings → Secrets and variables → Actions so
+   the scheduled workflows run under your account, not the original owner's.
+
+2. **Point `resume_url` at your own resume** in `config/settings.yaml`. It
+   must be a raw, publicly-fetchable URL (e.g. a raw GitHub link to a `.tex`
+   file in your own resume repo) — `src/resume.py` just does a plain HTTP
+   GET. If your resume isn't LaTeX, `src/anonymize.py` only strips
+   `\contact{...}` macros, email addresses, and GitHub/LinkedIn URLs before
+   sending it to Claude for scoring; for a non-LaTeX resume you can simplify
+   or skip that step, since the regexes are LaTeX-specific.
+
+3. **Rewrite `config/keywords.yaml` for your own role targets.** This is the
+   biggest thing to change, since it encodes *whose* jobs count as a fit:
+   - `climate_keywords` — the climate/renewable terms are generic and
+     probably don't need much editing.
+   - `management_titles` — title words that mark a job as management-level.
+     Adjust to the seniority you're targeting.
+   - `complex_ic_signals` — individual-contributor titles that should count
+     as a fit even without a management title. Replace the current
+     engineering/ML-heavy list (staff engineer, ML, computer vision, etc.)
+     with signals for your own field — e.g. for policy: `policy analyst`,
+     `regulatory affairs`, `program manager`; for finance:
+     `investment analyst`, `portfolio manager`, `climate finance`; for
+     supply chain: `procurement`, `supply chain manager`, `logistics`.
+   - `excluded_functions` — title words that disqualify an otherwise-matching
+     `management_titles` hit (e.g. "sales manager" shouldn't match if you're
+     not looking for sales roles). The current list excludes sales,
+     marketing, HR, legal, and similar business functions — **delete any of
+     these that are actually your target function**, since as shipped it
+     would filter out roles you might want.
+   - The comment in the file referencing "Aviva's technical-leadership
+     background" is a leftover from the original owner — safe to delete or
+     rewrite once you've customized the lists.
+
+4. **Update the personal settings in `config/settings.yaml`**:
+   `salary_min`/`salary_max` for your target range, and `home_lat`/`home_lon`
+   plus `max_commute_miles` for your commute radius (get coordinates from
+   any map/geocoding site by searching your address).
+
+5. **Leave `config/companies_seed.yaml` and `config/companies.yaml` alone**
+   (or add to them) — they're climate-tech company boards, which should be
+   equally relevant regardless of your role, and `src/seed_refresh.py` keeps
+   growing the list automatically.
+
+6. **Run the pipeline locally first** (`python -m src.run`) to sanity-check
+   your keyword and settings changes before letting the scheduled GitHub
+   Actions workflows take over.
