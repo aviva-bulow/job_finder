@@ -144,6 +144,7 @@ def run_discovery(seed_path: str, companies_path: str) -> list[dict]:
 
     existing = existing_data.get("companies") or []
     known_names = {c["name"] for c in existing}
+    known_tokens = {(c["ats_type"], c["token"]) for c in existing}
 
     pending_names = [
         entry["name"] for entry in seed.get("companies", []) if entry["name"] not in known_names
@@ -155,7 +156,19 @@ def run_discovery(seed_path: str, companies_path: str) -> list[dict]:
     # waiting on one company's network round-trips before starting the next.
     with _make_session() as session, ThreadPoolExecutor(max_workers=DISCOVERY_WORKERS) as pool:
         results = pool.map(lambda name: discover_company(name, session=session), pending_names)
-        newly_discovered = [found for found in results if found is not None]
+        found = [r for r in results if r is not None]
+
+    # Different seed names can resolve to the same board (e.g. "Mill" and
+    # "Mill Industries" both probing to greenhouse/mill) - keep only the
+    # first name per (ats_type, token), otherwise the pipeline fetches and
+    # scores the same postings twice under two different company labels.
+    newly_discovered = []
+    for company in found:
+        key = (company["ats_type"], company["token"])
+        if key in known_tokens:
+            continue
+        known_tokens.add(key)
+        newly_discovered.append(company)
 
     if newly_discovered:
         existing.extend(newly_discovered)

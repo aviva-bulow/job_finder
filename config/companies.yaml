@@ -101,3 +101,477 @@ companies:
 - name: Boston Materials
   ats_type: lever
   token: boston-materials
+- name: Activate
+  ats_type: greenhouse
+  token: activate
+- name: Aigen
+  ats_type: lever
+  token: aigen
+- name: Air Company
+  ats_type: greenhouse
+  token: air
+- name: Albedo
+  ats_type: greenhouse
+  token: albedo
+- name: Ammobia
+  ats_type: lever
+  token: ammobia
+- name: AMP
+  ats_type: ashby
+  token: amp
+- name: Aperia Technologies
+  ats_type: greenhouse
+  token: aperiatechnologies
+- name: Applied Intuition
+  ats_type: ashby
+  token: applied
+- name: Aquatic Labs
+  ats_type: ashby
+  token: aquatic
+- name: Arbor
+  ats_type: ashby
+  token: arbor
+- name: Arch
+  ats_type: ashby
+  token: arch
+- name: Array Labs
+  ats_type: greenhouse
+  token: array
+- name: Astro Mechanica
+  ats_type: ashby
+  token: astro-mechanica
+- name: Avnos, Inc.
+  ats_type: greenhouse
+  token: avnos
+- name: Axle Mobility
+  ats_type: ashby
+  token: axle-mobility
+- name: Banyu Carbon
+  ats_type: greenhouse
+  token: banyucarbon
+- name: Bedrock Energy
+  ats_type: lever
+  token: bedrockenergy
+- name: BETA Technologies
+  ats_type: lever
+  token: beta
+- name: Blue Current
+  ats_type: greenhouse
+  token: bluecurrent
+- name: Blumen
+  ats_type: ashby
+  token: blumen
+- name: Branch Energy
+  ats_type: greenhouse
+  token: branch
+- name: Brimstone
+  ats_type: ashby
+  token: brimstone
+- name: Cache Energy
+  ats_type: ashby
+  token: cache
+- name: Cambio
+  ats_type: ashby
+  token: cambio
+- name: Cambium
+  ats_type: ashby
+  token: cambium
+- name: Capella Space
+  ats_type: greenhouse
+  token: capellaspace
+- name: CarbonCapture
+  ats_type: lever
+  token: carboncapture
+- name: Carbonfuture
+  ats_type: greenhouse
+  token: carbonfuture
+- name: Cascade Climate
+  ats_type: lever
+  token: cascade-climate
+- name: Charge Robotics
+  ats_type: ashby
+  token: charge-robotics
+- name: CivilGrid
+  ats_type: ashby
+  token: civilgrid
+- name: Cocoon
+  ats_type: greenhouse
+  token: cocoon
+- name: Commons
+  ats_type: ashby
+  token: commons
+- name: Community Energy Labs
+  ats_type: greenhouse
+  token: community
+- name: ConnectDER
+  ats_type: greenhouse
+  token: connectder
+- name: Coperniq
+  ats_type: ashby
+  token: coperniq
+- name: CREW Carbon
+  ats_type: ashby
+  token: crew-carbon
+- name: Crusoe
+  ats_type: ashby
+  token: crusoe
+- name: Dandelion Energy
+  ats_type: ashby
+  token: dandelion
+- name: David Energy
+  ats_type: ashby
+  token: davidenergy
+- name: Deep Sky
+  ats_type: lever
+  token: deepsky
+- name: Diamond Foundry
+  ats_type: lever
+  token: diamondfoundry
+- name: Dimensional Energy
+  ats_type: ashby
+  token: dimensional
+- name: DroneDeploy
+  ats_type: lever
+  token: dronedeploy
+- name: ecoworks
+  ats_type: greenhouse
+  token: ecoworks
+- name: Edacious
+  ats_type: lever
+  token: edacious
+- name: Eli
+  ats_type: ashby
+  token: eli
+- name: Energize Capital
+  ats_type: greenhouse
+  token: energizecapital
+- name: EnergyHub
+  ats_type: greenhouse
+  token: energyhub
+- name: Enode
+  ats_type: ashby
+  token: enode
+- name: Equatic
+  ats_type: greenhouse
+  token: equatic
+- name: Equilibrium Energy
+  ats_type: greenhouse
+  token: equilibriumenergy
+- name: Ethic
+  ats_type: greenhouse
+  token: ethic
+- name: Euclid Power
+  ats_type: ashby
+  token: euclid-power
+- name: FarmRaise
+  ats_type: ashby
+  token: farmraise
+- name: Fleet
+  ats_type: greenhouse
+  token: fleet
+- name: Fleetzero
+  ats_type: lever
+  token: fleetzero
+- name: Forerunner
+  ats_type: ashby
+  token: forerunner
+- name: Fourth Power
+  ats_type: ashby
+  token: fourth-power
+- name: Funga
+  ats_type: greenhouse
+  token: funga
+- name: Fuse Energy
+  ats_type: ashby
+  token: fuse
+- name: Glacier
+  ats_type: ashby
+  token: glacier
+- name: Goodr
+  ats_type: greenhouse
+  token: goodr
+- name: Graphyte
+  ats_type: ashby
+  token: graphyte
+- name: Gridware
+  ats_type: lever
+  token: gridware
+- name: Grover
+  ats_type: greenhouse
+  token: grover
+- name: Guidewheel
+  ats_type: greenhouse
+  token: guidewheel
+- name: Halter
+  ats_type: ashby
+  token: halter
+- name: Heart Aerospace
+  ats_type: greenhouse
+  token: heartaerospace
+- name: Hgen
+  ats_type: lever
+  token: hgen
+- name: HIVED
+  ats_type: ashby
+  token: hived
+- name: Hoxton Farms
+  ats_type: ashby
+  token: hoxtonfarms
+- name: Impossible Foods
+  ats_type: ashby
+  token: impossible-foods
+- name: Industrious Labs
+  ats_type: greenhouse
+  token: industriouslabs
+- name: Isometric
+  ats_type: ashby
+  token: isometric
+- name: Kettle
+  ats_type: greenhouse
+  token: kettle
+- name: KoBold Metals
+  ats_type: greenhouse
+  token: koboldmetals
+- name: Leap
+  ats_type: greenhouse
+  token: leap
+- name: LevelTen Energy
+  ats_type: greenhouse
+  token: leveltenenergy
+- name: Lightship
+  ats_type: lever
+  token: lightship
+- name: Linear Labs
+  ats_type: ashby
+  token: linear
+- name: Lumen Energy
+  ats_type: ashby
+  token: lumen
+- name: Magrathea
+  ats_type: greenhouse
+  token: magrathea
+- name: Marble
+  ats_type: ashby
+  token: marble
+- name: MineSense Technologies
+  ats_type: lever
+  token: minesense
+- name: MOLG
+  ats_type: ashby
+  token: molg
+- name: Molten Industries
+  ats_type: lever
+  token: moltenindustries
+- name: Moment Energy
+  ats_type: greenhouse
+  token: momentenergy
+- name: Mosaic
+  ats_type: ashby
+  token: mosaic
+- name: Muon Space
+  ats_type: greenhouse
+  token: muonspace
+- name: Near Space Labs
+  ats_type: greenhouse
+  token: nearspacelabs
+- name: Neara
+  ats_type: ashby
+  token: neara
+- name: Nitricity
+  ats_type: greenhouse
+  token: nitricity
+- name: Odyssey
+  ats_type: ashby
+  token: odyssey
+- name: Oklo
+  ats_type: greenhouse
+  token: oklo
+- name: Omnidian
+  ats_type: lever
+  token: omnidian
+- name: Ostrom
+  ats_type: ashby
+  token: ostrom
+- name: Overview Energy
+  ats_type: ashby
+  token: overviewenergy
+- name: Pacific Fusion
+  ats_type: greenhouse
+  token: pacificfusion
+- name: Palmetto
+  ats_type: greenhouse
+  token: palmetto
+- name: Panthalassa
+  ats_type: greenhouse
+  token: panthalassa
+- name: Parallel Systems
+  ats_type: greenhouse
+  token: parallel
+- name: Patch
+  ats_type: greenhouse
+  token: patch
+- name: Pathways
+  ats_type: ashby
+  token: pathways
+- name: PermitFlow
+  ats_type: ashby
+  token: permitflow
+- name: Planet
+  ats_type: ashby
+  token: planet
+- name: Powerline
+  ats_type: ashby
+  token: powerline
+- name: Prolific Machines
+  ats_type: lever
+  token: prolific-machines
+- name: Pyka
+  ats_type: lever
+  token: pyka
+- name: Quaise Energy
+  ats_type: greenhouse
+  token: quaise
+- name: Quilt
+  ats_type: greenhouse
+  token: quilt
+- name: Radiant
+  ats_type: ashby
+  token: radiant
+- name: Rainmaker
+  ats_type: ashby
+  token: rainmaker
+- name: Reach
+  ats_type: greenhouse
+  token: reach
+- name: Recurrent
+  ats_type: greenhouse
+  token: recurrent
+- name: ReFED
+  ats_type: lever
+  token: refed
+- name: Reliable Robotics
+  ats_type: ashby
+  token: reliable-robotics
+- name: Rewind
+  ats_type: ashby
+  token: rewind
+- name: River
+  ats_type: ashby
+  token: river
+- name: Rumin8
+  ats_type: lever
+  token: rumin8
+- name: Runwise
+  ats_type: greenhouse
+  token: runwise
+- name: Safi
+  ats_type: ashby
+  token: safi
+- name: Sentient Energy
+  ats_type: ashby
+  token: sentient
+- name: Shift EV
+  ats_type: ashby
+  token: shift
+- name: Sibros
+  ats_type: lever
+  token: sibros
+- name: Sierra Energy
+  ats_type: ashby
+  token: sierra
+- name: SirenOpt
+  ats_type: greenhouse
+  token: sirenopt
+- name: Sitetracker
+  ats_type: lever
+  token: sitetracker
+- name: SmartRent
+  ats_type: greenhouse
+  token: smartrent
+- name: Sofar Ocean
+  ats_type: ashby
+  token: sofarocean
+- name: Solcoa Technologies
+  ats_type: ashby
+  token: solcoa
+- name: Solstice
+  ats_type: ashby
+  token: solstice
+- name: SOURCE
+  ats_type: lever
+  token: source
+- name: Stable
+  ats_type: ashby
+  token: stable
+- name: Stand
+  ats_type: ashby
+  token: stand
+- name: Still Bright
+  ats_type: ashby
+  token: stillbright
+- name: Sustainment
+  ats_type: greenhouse
+  token: sustainment
+- name: Sweep
+  ats_type: ashby
+  token: sweep
+- name: Swift Solar
+  ats_type: greenhouse
+  token: swiftsolar
+- name: Sylvera
+  ats_type: ashby
+  token: sylvera
+- name: Tandem PV
+  ats_type: ashby
+  token: tandempv
+- name: Tetra
+  ats_type: greenhouse
+  token: tetra
+- name: Thalo Labs
+  ats_type: lever
+  token: thalolabs
+- name: Transmutex
+  ats_type: lever
+  token: transmutex
+- name: Trove
+  ats_type: greenhouse
+  token: trove
+- name: Twelve
+  ats_type: ashby
+  token: twelve
+- name: Tyba
+  ats_type: ashby
+  token: tyba
+- name: Vatn Systems
+  ats_type: greenhouse
+  token: vatnsystems
+- name: Vaulted Deep
+  ats_type: ashby
+  token: vaulted-deep
+- name: Vector
+  ats_type: ashby
+  token: vector
+- name: VEIR
+  ats_type: greenhouse
+  token: veir
+- name: Verdigris Technologies
+  ats_type: lever
+  token: verdigris
+- name: Verse Inc.
+  ats_type: greenhouse
+  token: verse
+- name: Vesta
+  ats_type: ashby
+  token: vesta
+- name: VIA
+  ats_type: greenhouse
+  token: via
+- name: Voltus
+  ats_type: lever
+  token: voltus
+- name: Worldly
+  ats_type: ashby
+  token: worldly
+- name: Zero Homes
+  ats_type: lever
+  token: zerohomes
