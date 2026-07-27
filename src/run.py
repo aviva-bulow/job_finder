@@ -1,5 +1,6 @@
 import datetime
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
 import yaml
@@ -21,23 +22,39 @@ FETCHERS = {
 # overhead and lets more scoring happen per cache read.
 SCORE_BATCH_SIZE = 10
 
+# Fetching is I/O-bound (one HTTP request per company) and each company is
+# independent, so it parallelizes the same way discovery.py's board probing
+# does - this is what turns ~192 sequential requests into ~192/FETCH_WORKERS.
+FETCH_WORKERS = 16
+
 
 def load_yaml(path: str) -> dict:
     with open(path) as f:
         return yaml.safe_load(f) or {}
 
 
+def _fetch_company_jobs(company: dict) -> list:
+    ats_type = company["ats_type"]
+    fetch_fn = FETCHERS.get(ats_type)
+    if fetch_fn is None:
+        return []
+    try:
+        return fetch_fn(company["name"], company["token"])
+    except Exception as exc:  # noqa: BLE001 - one bad company shouldn't kill the run
+        print(f"  fetch failed for {company['name']} ({ats_type}): {exc}")
+        return []
+
+
 def fetch_all_jobs(companies: list[dict]) -> list:
     jobs = []
-    for company in companies:
-        ats_type = company["ats_type"]
-        fetch_fn = FETCHERS.get(ats_type)
-        if fetch_fn is None:
-            continue
-        try:
-            jobs.extend(fetch_fn(company["name"], company["token"]))
-        except Exception as exc:  # noqa: BLE001 - one bad company shouldn't kill the run
-            print(f"  fetch failed for {company['name']} ({ats_type}): {exc}")
+    with ThreadPoolExecutor(max_workers=FETCH_WORKERS) as pool:
+        futures = {pool.submit(_fetch_company_jobs, c): c for c in companies}
+        done = 0
+        for future in as_completed(futures):
+            jobs.extend(future.result())
+            done += 1
+            if done % 20 == 0 or done == len(companies):
+                print(f"  fetched {done}/{len(companies)} companies...")
     return jobs
 
 
@@ -81,8 +98,11 @@ def main():
             if job.id not in candidate_ids:
                 db.record(conn, job, today)
 
+        num_batches = -(-len(candidates) // SCORE_BATCH_SIZE)  # ceil div
         for batch_start in range(0, len(candidates), SCORE_BATCH_SIZE):
+            batch_num = batch_start // SCORE_BATCH_SIZE + 1
             batch = candidates[batch_start:batch_start + SCORE_BATCH_SIZE]
+            print(f"  scoring batch {batch_num}/{num_batches} ({len(batch)} jobs)...")
             try:
                 results = score_jobs_batch(
                     client,
