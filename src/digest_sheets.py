@@ -5,7 +5,7 @@ from google.oauth2.service_account import Credentials
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-HEADER = ["Date Found", "Score", "Company", "Title", "Location", "Reasoning", "Link"]
+HEADER = ["Date Found", "Date Posted", "Score", "Company", "Title", "Location", "Reasoning", "Link"]
 
 
 def _open_sheet(service_account_json: str, sheet_id: str):
@@ -35,6 +35,7 @@ def append_matches(
         rows.append(
             [
                 found_date,
+                job.date_posted,
                 m["score"],
                 job.company,
                 job.title,

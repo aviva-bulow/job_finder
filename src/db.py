@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS seen_jobs (
     title TEXT NOT NULL,
     url TEXT NOT NULL,
     first_seen_date TEXT NOT NULL,
+    date_posted TEXT,
     score INTEGER,
     reasoning TEXT
 );
@@ -24,11 +25,20 @@ CREATE TABLE IF NOT EXISTS geocode_cache (
 """
 
 
+def _migrate(conn: sqlite3.Connection) -> None:
+    # Databases created before date_posted existed won't have the column -
+    # CREATE TABLE IF NOT EXISTS is a no-op on them, so add it explicitly.
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(seen_jobs)")}
+    if "date_posted" not in columns:
+        conn.execute("ALTER TABLE seen_jobs ADD COLUMN date_posted TEXT")
+
+
 @contextmanager
 def connect(db_path: str):
     conn = sqlite3.connect(db_path)
     try:
         conn.executescript(SCHEMA)
+        _migrate(conn)
         yield conn
         conn.commit()
     finally:
@@ -53,8 +63,8 @@ def record(
     conn.execute(
         """
         INSERT OR IGNORE INTO seen_jobs
-            (id, description_hash, company, title, url, first_seen_date, score, reasoning)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            (id, description_hash, company, title, url, first_seen_date, date_posted, score, reasoning)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             job.id,
@@ -63,6 +73,7 @@ def record(
             job.title,
             job.url,
             first_seen_date,
+            job.date_posted,
             score,
             reasoning,
         ),

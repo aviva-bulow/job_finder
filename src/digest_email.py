@@ -14,6 +14,7 @@ def send_digest(gmail_address: str, gmail_app_password: str, recipient: str, mat
         job = m["job"]
         lines.append(
             f"[{m['score']}/10] {job.title} @ {job.company} ({job.location})\n"
+            f"Posted: {job.date_posted}\n"
             f"{m['reasoning']}\n{job.url}\n"
         )
     body = "\n".join(lines)

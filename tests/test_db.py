@@ -1,3 +1,5 @@
+import sqlite3
+
 from src import db
 from src.fetchers.base import Job
 
@@ -66,6 +68,55 @@ def test_record_is_idempotent(tmp_path):
         count = conn.execute("SELECT COUNT(*) FROM seen_jobs").fetchone()[0]
 
     assert count == 1
+
+
+def test_record_stores_date_posted(tmp_path):
+    db_path = str(tmp_path / "jobs.sqlite")
+    job = make_job()
+
+    with db.connect(db_path) as conn:
+        db.record(conn, job, "2026-01-05")
+
+    with db.connect(db_path) as conn:
+        row = conn.execute(
+            "SELECT date_posted FROM seen_jobs WHERE id = ?", (job.id,)
+        ).fetchone()
+
+    assert row[0] == "2026-01-01"
+
+
+def test_migrates_legacy_db_missing_date_posted_column(tmp_path):
+    db_path = str(tmp_path / "jobs.sqlite")
+
+    # Simulate a database created before date_posted existed.
+    legacy_conn = sqlite3.connect(db_path)
+    legacy_conn.executescript(
+        """
+        CREATE TABLE seen_jobs (
+            id TEXT PRIMARY KEY,
+            description_hash TEXT NOT NULL,
+            company TEXT NOT NULL,
+            title TEXT NOT NULL,
+            url TEXT NOT NULL,
+            first_seen_date TEXT NOT NULL,
+            score INTEGER,
+            reasoning TEXT
+        );
+        """
+    )
+    legacy_conn.commit()
+    legacy_conn.close()
+
+    job = make_job()
+    with db.connect(db_path) as conn:
+        db.record(conn, job, "2026-01-05")
+
+    with db.connect(db_path) as conn:
+        row = conn.execute(
+            "SELECT date_posted FROM seen_jobs WHERE id = ?", (job.id,)
+        ).fetchone()
+
+    assert row[0] == "2026-01-01"
 
 
 def test_geocode_cache_round_trip(tmp_path):

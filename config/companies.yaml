@@ -575,3 +575,6 @@ companies:
 - name: Zero Homes
   ats_type: lever
   token: zerohomes
+- name: Agreena
+  ats_type: ashby
+  token: agreena
