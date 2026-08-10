@@ -578,3 +578,9 @@ companies:
 - name: Agreena
   ats_type: ashby
   token: agreena
+- name: Alloy Enterprises
+  ats_type: ashby
+  token: alloyenterprises
+- name: Machina Labs
+  ats_type: ashby
+  token: machina-labs
