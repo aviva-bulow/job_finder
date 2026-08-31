@@ -584,3 +584,9 @@ companies:
 - name: Machina Labs
   ats_type: ashby
   token: machina-labs
+- name: Fervo Energy
+  ats_type: greenhouse
+  token: fervoenergy
+- name: Crux
+  ats_type: ashby
+  token: crux
