@@ -590,3 +590,6 @@ companies:
 - name: Crux
   ats_type: ashby
   token: crux
+- name: STOKE Space Technologies
+  ats_type: greenhouse
+  token: stokespacetechnologies
