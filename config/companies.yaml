@@ -593,3 +593,12 @@ companies:
 - name: STOKE Space Technologies
   ats_type: greenhouse
   token: stokespacetechnologies
+- name: EARTH AI
+  ats_type: ashby
+  token: earth
+- name: C.Scale
+  ats_type: greenhouse
+  token: cscale
+- name: Cala Systems
+  ats_type: ashby
+  token: cala
