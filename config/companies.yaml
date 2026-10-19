@@ -602,3 +602,12 @@ companies:
 - name: Cala Systems
   ats_type: ashby
   token: cala
+- name: Insight M
+  ats_type: greenhouse
+  token: insight
+- name: Malta
+  ats_type: ashby
+  token: malta
+- name: Mission Barns
+  ats_type: ashby
+  token: mission-barns
