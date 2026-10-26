@@ -97,6 +97,10 @@ def main():
         for job in new_jobs:
             if job.id not in candidate_ids:
                 db.record(conn, job, today)
+        conn.commit()
+
+        google_sheet_id = os.environ.get("GOOGLE_SHEET_ID")
+        google_service_account_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
 
         num_batches = -(-len(candidates) // SCORE_BATCH_SIZE)  # ceil div
         for batch_start in range(0, len(candidates), SCORE_BATCH_SIZE):
@@ -118,6 +122,7 @@ def main():
                 )
                 continue
 
+            batch_matches = []
             for i, job in enumerate(batch):
                 result = results.get(i)
                 if result is None:
@@ -127,17 +132,25 @@ def main():
                     conn, job, today, score=result["score"], reasoning=result["reasoning"]
                 )
                 if result["score"] >= settings["score_threshold"]:
-                    matches.append(
+                    batch_matches.append(
                         {"job": job, "score": result["score"], "reasoning": result["reasoning"]}
                     )
 
+            # Commit per batch so an interrupted run keeps the scoring it paid
+            # for. Once committed, these jobs count as seen and a rerun won't
+            # revisit them - so their matches must reach the sheet *before*
+            # the commit. Dying in between re-scores the batch on rerun (a
+            # duplicate sheet row at worst) rather than silently losing a match.
+            if batch_matches and google_sheet_id and google_service_account_json:
+                batch_matches.sort(key=lambda m: m["score"], reverse=True)
+                digest_sheets.append_matches(
+                    google_service_account_json, google_sheet_id, today, batch_matches
+                )
+            conn.commit()
+            matches.extend(batch_matches)
+
     matches.sort(key=lambda m: m["score"], reverse=True)
     print(f"{len(matches)} matches at/above threshold {settings['score_threshold']}")
-
-    google_sheet_id = os.environ.get("GOOGLE_SHEET_ID")
-    google_service_account_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
-    if matches and google_sheet_id and google_service_account_json:
-        digest_sheets.append_matches(google_service_account_json, google_sheet_id, today, matches)
 
     gmail_address = os.environ.get("GMAIL_ADDRESS")
     gmail_app_password = os.environ.get("GMAIL_APP_PASSWORD")

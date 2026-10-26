@@ -20,7 +20,10 @@ README.md has the user-facing docs (setup, secrets, forking guide).
    with prompt caching of the system text (anonymized resume + salary range).
    The prompt also scores down employers without a pro-social mission.
 6. Record scores; matches ≥ `score_threshold` go to `src/digest_sheets.py`
-   and `src/digest_email.py` (each skipped if its env vars are missing)
+   after each batch, then one `src/digest_email.py` digest at the end (each
+   skipped if its env vars are missing). The DB is committed per batch, after
+   that batch's sheet append, so a killed run keeps its progress and a rerun
+   resumes where it stopped (worst case: a duplicate sheet row, never a lost match)
 
 ## Where things are
 
@@ -42,7 +45,7 @@ README.md has the user-facing docs (setup, secrets, forking guide).
 
 - Activate venv: `source .venv/bin/activate`; tests: `pytest` (all external calls
   mocked with `requests-mock` / fakes — no secrets needed)
-- Most `src/` modules have a matching `tests/test_*.py` (not `run.py`/`resume.py`);
+- Most `src/` modules have a matching `tests/test_*.py` (not `resume.py`);
   add/update tests with changes
 - flake8 max line length is 100
 - Secrets live in `.env` locally (gitignored) and as GitHub repo secrets for Actions
@@ -53,3 +56,5 @@ README.md has the user-facing docs (setup, secrets, forking guide).
   and `config/companies_seed.yaml`); pull before touching those files to avoid conflicts
 - Mission keywords must avoid benefits/EEO/requirements boilerplate words
   ("health", "medical", "education", "disability"...) or every posting passes
+- Long local runs: start detached so they survive the Claude session, e.g.
+  `setsid nohup python -u -m src.run > <log> 2>&1 &` (`-u` so progress shows up)
