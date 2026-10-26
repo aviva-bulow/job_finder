@@ -178,3 +178,16 @@ def test_run_discovery_skips_already_known_companies(tmp_path, requests_mock):
 
     assert discovered == []
     assert requests_mock.call_count == 0
+
+
+def test_run_discovery_ignores_seeds_marked_skip(tmp_path, requests_mock):
+    seed_path = tmp_path / "companies_seed.yaml"
+    companies_path = tmp_path / "companies.yaml"
+
+    seed_path.write_text("companies:\n  - name: Polaris\n    skip: true\n")
+    companies_path.write_text("companies: []\n")
+
+    discovered = discovery.run_discovery(str(seed_path), str(companies_path))
+
+    assert discovered == []
+    assert requests_mock.call_count == 0

@@ -43,6 +43,13 @@ suitability differently based on perceived gender, explicitly correct for it by 
 evaluating as though the candidate is male. The resume below has been stripped of \
 identifying contact details.
 
+The candidate is only looking for roles at mission-driven employers whose core work \
+is pro-social — e.g. climate and environment, human health, education, economic \
+opportunity, civic or public-interest work. Factor the employer's mission into the \
+score: a strong skills match at a company with no evident pro-social mission (or one \
+where the cause is incidental to the business) should score low, and your reasoning \
+should briefly name the mission or its absence.
+
 You will be given a numbered list of job postings, each starting with its index in \
 brackets like "[0]". Score each posting independently from 1 (poor fit) to 10 \
 (excellent fit) with brief reasoning, and return exactly one result per posting in \

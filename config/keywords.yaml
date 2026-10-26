@@ -1,4 +1,11 @@
-climate_keywords:
+# A posting must mention at least one of these (title or description) to be
+# considered. They mark the employer's work as mission-driven / pro-social.
+# Avoid words that show up in nearly every posting's benefits or requirements
+# boilerplate - e.g. "health", "medical", "mental health", "wellness"
+# (benefits), "education" (requirements), "disability", "accessibility" (EEO
+# statements) - or every posting will pass.
+mission_keywords:
+  # Climate / environment
   - climate
   - renewable
   - clean energy
@@ -30,6 +37,58 @@ climate_keywords:
   - regenerative agriculture
   - conservation
   - biodiversity
+
+  # Health / life sciences
+  - healthcare
+  - patients
+  - patient care
+  - clinical
+  - clinicians
+  - public health
+  - global health
+  - digital health
+  - health equity
+  - healthtech
+  - biotech
+  - life sciences
+  - therapeutics
+  - drug discovery
+  - diagnostics
+  - genomics
+  - precision medicine
+
+  # Education
+  - edtech
+  - students
+  - learners
+  - teachers
+  - k-12
+  - literacy
+
+  # Economic opportunity / social services
+  - financial inclusion
+  - economic mobility
+  - affordable housing
+  - homelessness
+  - underserved
+  - low-income
+  - poverty
+  - workforce development
+  - food security
+  - food insecurity
+
+  # Civic / public interest
+  - civic tech
+  - govtech
+  - public sector
+  - public interest
+  - social impact
+  - nonprofit
+  - non-profit
+  - public benefit corporation
+  - b corp
+  - criminal justice
+  - humanitarian
 
 management_titles:
   - manager

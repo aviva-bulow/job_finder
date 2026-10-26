@@ -2,7 +2,7 @@ from src import filters
 from src.fetchers.base import Job
 
 KEYWORDS_CONFIG = {
-    "climate_keywords": ["climate", "renewable", "solar"],
+    "mission_keywords": ["climate", "renewable", "solar", "patients", "public health"],
     "management_titles": ["manager", "director", "head of"],
     "excluded_functions": ["sales", "marketing", "accounting"],
     "complex_ic_signals": ["staff engineer", "research scientist", "quantitative"],
@@ -40,6 +40,18 @@ def test_non_climate_management_does_not_match():
 def test_climate_without_management_or_ic_does_not_match():
     job = make_job("Customer Support Rep", "Help solar customers with billing.")
     assert filters.matches(job, KEYWORDS_CONFIG) is False
+
+
+def test_health_mission_management_title_matches():
+    job = make_job("Director of Engineering", "Software that helps clinicians care for patients.")
+    assert filters.matches(job, KEYWORDS_CONFIG) is True
+
+
+def test_legacy_climate_keywords_key_still_works():
+    legacy = {**KEYWORDS_CONFIG, "climate_keywords": ["solar"]}
+    del legacy["mission_keywords"]
+    job = make_job("Engineering Manager", "Join our solar deployment team.")
+    assert filters.matches(job, legacy) is True
 
 
 def test_keyword_match_is_case_insensitive():

@@ -1,8 +1,9 @@
 # Job Finder
 
-Automated pipeline that finds climate/renewable sector job openings — management
-or mathematically/scientifically complex IC roles — and rates how well each one
-fits a resume, using Claude.
+Automated pipeline that finds job openings at mission-driven employers — climate,
+human health, education, economic opportunity, civic tech, and other pro-social
+causes — for management or mathematically/scientifically complex IC roles, and
+rates how well each one fits a resume, using Claude.
 
 ## How it works
 
@@ -11,16 +12,20 @@ fits a resume, using Claude.
    RSS feeds).
 2. **Dedup** — skips postings already seen, either by exact listing or by an
    identical job description (catches reposts under a new URL).
-3. **Filter** — keeps postings that mention climate/renewable topics *and*
+3. **Filter** — keeps postings that mention a mission-driven topic *and*
    either a management-level title or a complex technical/scientific IC
    signal (see `config/keywords.yaml`).
 4. **Score** — sends each filtered posting, alongside an anonymized version of
-   the resume, to Claude for a 1–10 fit score with reasoning.
+   the resume, to Claude for a 1–10 fit score with reasoning. The score also
+   weighs whether the employer's mission is genuinely pro-social, as a
+   backstop to the coarse keyword filter.
 5. **Digest** — matches at or above the score threshold are appended to a
    Google Sheet and, if any qualify, summarized in an email.
 
 The company list isn't hand-picked once and forgotten: `config/companies_seed.yaml`
-holds company names sourced from public climate-tech directories, and
+holds company names sourced from public directories of mission-driven employers
+([Climate Jobs List](https://www.climatejobslist.com/companies) and
+[Tech Jobs for Good](https://www.techjobsforgood.com/companies/)), and
 `src/discovery.py` probes each one for a live Greenhouse/Lever/Ashby board,
 writing verified hits into `config/companies.yaml`. `src/seed_refresh.py`
 grows the seed list itself by reading those same directories. Both run
@@ -79,7 +84,7 @@ Both also support manual triggering via `workflow_dispatch` in the Actions tab.
 ## Tuning
 
 - `config/settings.yaml` — score threshold, Claude model, resume source URL.
-- `config/keywords.yaml` — climate/renewable terms, management titles, and
+- `config/keywords.yaml` — mission-driven topic terms, management titles, and
   complex-IC signals used in the pre-filter.
 - `config/companies_seed.yaml` — add company names here anytime; discovery
   picks them up automatically.
@@ -87,8 +92,8 @@ Both also support manual triggering via `workflow_dispatch` in the Actions tab.
 ## Forking this for your own job search
 
 Everything role-specific lives in a handful of config files — nothing you
-need to change requires touching the Python. If you're also climate-tech
-focused but coming from a different skill set (e.g. not
+need to change requires touching the Python. If you're also looking for
+mission-driven work but coming from a different skill set (e.g. not
 engineering/science-management), here's the checklist:
 
 1. **Fork the repo**, then `cp .env.example .env` and fill in your own
@@ -107,8 +112,11 @@ engineering/science-management), here's the checklist:
 
 3. **Rewrite `config/keywords.yaml` for your own role targets.** This is the
    biggest thing to change, since it encodes *whose* jobs count as a fit:
-   - `climate_keywords` — the climate/renewable terms are generic and
-     probably don't need much editing.
+   - `mission_keywords` — terms marking a posting as mission-driven
+     (climate, health, education, etc.). These are generic and probably
+     don't need much editing; trim any causes you don't care about. The
+     mission-alignment instruction in `SYSTEM_INSTRUCTIONS` in
+     `src/scorer.py` lists the same causes, so keep the two in step.
    - `management_titles` — title words that mark a job as management-level.
      Adjust to the seniority you're targeting.
    - `complex_ic_signals` — individual-contributor titles that should count
@@ -134,7 +142,7 @@ engineering/science-management), here's the checklist:
    any map/geocoding site by searching your address).
 
 5. **Leave `config/companies_seed.yaml` and `config/companies.yaml` alone**
-   (or add to them) — they're climate-tech company boards, which should be
+   (or add to them) — they're mission-driven company boards, which should be
    equally relevant regardless of your role, and `src/seed_refresh.py` keeps
    growing the list automatically.
 

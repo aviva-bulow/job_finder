@@ -146,8 +146,13 @@ def run_discovery(seed_path: str, companies_path: str) -> list[dict]:
     known_names = {c["name"] for c in existing}
     known_tokens = {(c["ats_type"], c["token"]) for c in existing}
 
+    # "skip: true" marks a seed whose name verifies against the wrong board
+    # (common for one-word names like "Polaris") - without it, removing the
+    # bad board from companies.yaml would just get it re-discovered next week.
     pending_names = [
-        entry["name"] for entry in seed.get("companies", []) if entry["name"] not in known_names
+        entry["name"]
+        for entry in seed.get("companies", [])
+        if entry["name"] not in known_names and not entry.get("skip")
     ]
 
     # These are independent, I/O-bound HTTP calls (each company probes up to
