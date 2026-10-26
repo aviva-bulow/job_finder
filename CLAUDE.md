@@ -12,7 +12,9 @@ README.md has the user-facing docs (setup, secrets, forking guide).
 1. Fetch postings for every board in `config/companies.yaml` (`src/fetchers/`)
 2. Drop jobs already in the SQLite DB (`db.is_seen` — by job id *or* description hash)
 3. Keyword filter (`src/filters.py`, driven by `config/keywords.yaml`): needs a
-   `mission_keywords` hit *and* a management title or complex-IC signal
+   `mission_keywords` hit *and* a management title or complex-IC signal.
+   An `excluded_functions` word in the title blocks the management path and
+   description-only IC matches (IC signal must then be in the title)
 4. Commute filter (`src/location.py` — geocodes job locations, haversine vs
    `home_lat`/`home_lon`; geocodes are cached in the DB). Non-candidates are
    recorded in the DB unscored so they're never re-evaluated.

@@ -29,9 +29,13 @@ def matches(job: Job, keywords_config: dict) -> bool:
     # Non-technical business functions (sales, marketing, finance, etc.) can
     # still carry a management title like "manager" or "director" - exclude
     # those explicitly rather than treating any management word as a match.
-    is_management = _contains_any(job.title, management_kw) and not _contains_any(
-        job.title, excluded_kw
+    title_excluded = _contains_any(job.title, excluded_kw)
+    is_management = _contains_any(job.title, management_kw) and not title_excluded
+    # An IC signal in the description alone is often just company boilerplate
+    # ("we use machine learning to..."), which let titles like "Payroll
+    # Manager" through - so for excluded functions, require it in the title.
+    is_complex_ic = _contains_any(job.title, ic_kw) or (
+        not title_excluded and _contains_any(job.description, ic_kw)
     )
-    is_complex_ic = _contains_any(haystack, ic_kw)
 
     return is_management or is_complex_ic

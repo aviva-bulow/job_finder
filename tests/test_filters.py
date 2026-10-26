@@ -4,7 +4,7 @@ from src.fetchers.base import Job
 KEYWORDS_CONFIG = {
     "mission_keywords": ["climate", "renewable", "solar", "patients", "public health"],
     "management_titles": ["manager", "director", "head of"],
-    "excluded_functions": ["sales", "marketing", "accounting"],
+    "excluded_functions": ["sales", "marketing", "accounting", "payroll"],
     "complex_ic_signals": ["staff engineer", "research scientist", "quantitative"],
 }
 
@@ -73,6 +73,18 @@ def test_excluded_function_does_not_block_complex_ic_match():
     job = make_job(
         "Sales Research Scientist", "Quantitative research for our solar sales team."
     )
+    assert filters.matches(job, KEYWORDS_CONFIG) is True
+
+
+def test_excluded_function_blocks_ic_signal_only_in_description():
+    job = make_job(
+        "Payroll Manager", "Our solar platform is built by a research scientist team."
+    )
+    assert filters.matches(job, KEYWORDS_CONFIG) is False
+
+
+def test_ic_signal_in_description_still_matches_non_excluded_title():
+    job = make_job("Software Engineer", "Join our research scientist team on solar forecasting.")
     assert filters.matches(job, KEYWORDS_CONFIG) is True
 
 

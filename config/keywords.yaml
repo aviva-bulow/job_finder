@@ -104,7 +104,9 @@ management_titles:
 
 # Title words that mean a "management_titles" hit is a non-technical
 # business function, not a fit for Aviva's technical-leadership background.
-# Blocks the management match only - does not affect complex_ic_signals.
+# Blocks the management match, and also a complex_ic_signals match that only
+# comes from the description (company boilerplate often mentions "machine
+# learning" etc.) - an IC signal in the title itself still counts.
 excluded_functions:
   - sales
   - account executive
@@ -130,6 +132,33 @@ excluded_functions:
   - finance
   - operations
   - business
+  - product design
+  - designer
+  - art director
+  - creative
+  - brand
+  - paid social
+  - acquisition
+  - clinical program
+  - clinical product
+  - medical director
+  - physician
+  - nurse
+  - therapist
+  - direct services
+  - chief of staff
+  - account director
+  - contract manager
+  - payable
+  - payroll
+  - fp&a
+  - procurement
+  - demand planning
+  - real estate
+  - workplace
+  - talent
+  - people
+  - privacy
 
 complex_ic_signals:
   - staff engineer
@@ -145,3 +174,7 @@ complex_ic_signals:
   - mlops
   - perception
   - senior engineer
+  - business intelligence
+  - founding software engineer
+  - cto
+  - chief technology officer
