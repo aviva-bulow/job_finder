@@ -1418,3 +1418,12 @@ companies:
 - name: Wadhwani Foundation
   ats_type: greenhouse
   token: wadhwanifoundation
+- name: Dendra Systems
+  ats_type: ashby
+  token: dendra
+- name: Verne
+  ats_type: ashby
+  token: verne
+- name: Great Minds
+  ats_type: greenhouse
+  token: greatminds
