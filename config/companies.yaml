@@ -1433,3 +1433,6 @@ companies:
 - name: Princeton University
   ats_type: greenhouse
   token: princetonuniversity
+- name: Piq Energy
+  ats_type: ashby
+  token: piq-energy
